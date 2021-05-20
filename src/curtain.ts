@@ -4,8 +4,8 @@ export class Curtain {
   private body: HTMLBodyElement;
 
   private bodyHeight = 0;
-  private children: NodeListOf<HTMLElement>;
 
+  private children: HTMLElement[];
 
   private current?: HTMLElement|null;
 
@@ -16,7 +16,7 @@ export class Curtain {
   constructor(root: HTMLElement) {
     this.root = root;
     this.body = document.querySelector('body')!;
-    this.children = root.querySelectorAll('> section');
+    this.children = Array.from(root.children) as HTMLElement[];
     const regex = /Android|iPhone|iPad|iPod/i;
     this.isMobile = !!regex.exec(navigator.userAgent);
   }
