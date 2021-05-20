@@ -1,5 +1,6 @@
-import Curtain from './curtain';
+import { Curtain } from './curtain';
 
-test('Curtain should return null', () => {
-  expect(Curtain()).toEqual(null);
+test('should create new instance', () => {
+  const curtain = new Curtain(new HTMLElement());
+  expect(curtain).toBeTruthy();
 });
