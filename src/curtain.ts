@@ -99,21 +99,12 @@ export class Curtain {
 
     /* eslint-disable no-param-reassign */
     this.children.forEach((child, index) => {
-      const isCover = child.classList.contains('cover');
-
-      if (isCover) {
-        child.style.height = `${windowHeight}px`;
-        child.setAttribute('data-height', String(windowHeight));
-        levelHeight += windowHeight;
-      } else {
-        const height = Math.max(child.offsetHeight, windowHeight);
-        child.style.minHeight = `${height}px`;
-        child.setAttribute('data-height', String(height));
-        levelHeight += height;
-      }
-
+      const height = Math.max(child.offsetHeight, windowHeight);
+      child.style.minHeight = `${height}px`;
       child.style.zIndex = String(999 - index);
+      child.setAttribute('data-height', String(height));
       child.setAttribute('data-position', String(levelHeight));
+      levelHeight += height;
     });
     /* eslint-enable no-param-reassign */
 
