@@ -24,9 +24,11 @@ export class Curtain {
     this.currentPosition = Number(this.current?.getAttribute('data-position'));
 
     if (!this.isMobile) {
-      // if (this.children[1].length) {
-      //   this.children[1].nextAll().style.display:'none'});
-      // }
+      let nextAll = this.current?.nextElementSibling as HTMLElement;
+      while (nextAll) {
+        nextAll.style.display = 'none';
+        nextAll = nextAll.nextElementSibling as HTMLElement;
+      }
     }
 
     window.addEventListener('resize', () => {
