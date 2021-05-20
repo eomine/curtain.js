@@ -2,24 +2,28 @@ export class Curtain {
   root: HTMLElement;
 
   private body: HTMLBodyElement;
+
   private bodyHeight = 0;
   private children: NodeListOf<HTMLElement>;
-  private isMobile = false;
+
+
   private current?: HTMLElement|null;
+
   private currentPosition = 0;
+
+  private isMobile = false;
 
   constructor(root: HTMLElement) {
     this.root = root;
-
     this.body = document.querySelector('body')!;
     this.children = root.querySelectorAll('> section');
-    this.isMobile = !!navigator.userAgent.match(/Android|iPhone|iPad|iPod/i);
+    const regex = /Android|iPhone|iPad|iPod/i;
+    this.isMobile = !!regex.exec(navigator.userAgent);
   }
 
-  init() {
+  init(): void {
     this.setDimensions();
     this.children[0].classList.add('current');
-
     this.current = this.root.querySelector<HTMLElement>('.current');
     this.currentPosition = Number(this.current?.getAttribute('data-position'));
 
@@ -47,8 +51,8 @@ export class Curtain {
 
     const scrollTop = window.scrollY;
     const index = Number(this.current.getAttribute('data-index'));
-    
-    if (scrollTop < this.currentPosition && index > 0){
+
+    if (scrollTop < this.currentPosition && index > 0) {
       this.current.classList.remove('current');
       this.current.style.marginTop = '0';
 
@@ -75,7 +79,7 @@ export class Curtain {
 
       const next = this.current.nextElementSibling as HTMLElement;
       next.classList.add('current');
-      
+
       let nextAll = next.nextElementSibling as HTMLElement;
       while (nextAll) {
         nextAll.style.display = '';
@@ -93,6 +97,7 @@ export class Curtain {
     const windowHeight = window.outerHeight;
     let levelHeight = 0;
 
+    /* eslint-disable no-param-reassign */
     this.children.forEach((child, index) => {
       const isCover = child.classList.contains('cover');
 
@@ -110,6 +115,7 @@ export class Curtain {
       child.style.zIndex = String(999 - index);
       child.setAttribute('data-position', String(levelHeight));
     });
+    /* eslint-enable no-param-reassign */
 
     if (!this.isMobile) {
       this.setBodyHeight();
@@ -118,7 +124,7 @@ export class Curtain {
 
   private setBodyHeight() {
     let bodyHeight = 0;
-    this.children.forEach(child => {
+    this.children.forEach((child) => {
       bodyHeight += child.offsetHeight;
     });
     this.bodyHeight = bodyHeight;
